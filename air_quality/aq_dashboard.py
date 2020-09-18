@@ -14,8 +14,8 @@ DB = SQLAlchemy(APP)
 
 @APP.route('/')
 def root():
-  
-  return 'TODO - part 2 and beyond!'
+    hazard = Record.query.filter(Record.value >= 10).all()
+    return str(hazard)
 
 def citysplit(city='Los Angeles', parameter='pm25'):
     status, body = api.measurements(city='Los Angeles', parameter='pm25')
@@ -48,7 +48,7 @@ class Record(DB.Model):
     datetime = DB.Column(DB.String(25))
     value = DB.Column(DB.Float, nullable=False)
     def __repr__(self):
-        return 'TODO - write a nice representation of Records'
+        return '< Date-time:{} - PM value: {}'.format(self.datetime, self.value)
 
 
 @APP.route('/refresh')
